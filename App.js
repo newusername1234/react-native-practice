@@ -1,25 +1,40 @@
 
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { Text, View } from 'react-native';
 
-class Greeting extends Component {
+class Blink extends Component {
+  
+  state = { isShowingText: true };
+  
+  componentDidMount() {
+    //toggle the state every second
+    setInterval(() => (
+      this.setState({ 
+        isShowingText: !this.state.isShowingText
+      })
+    ), 1000);
+  }
+
+  render() {
+    if (!this.state.isShowingText) {
+      return null;
+    }
+
+    return (
+      <Text>{this.props.text}</Text>
+    );
+  }
+}
+
+export default class BlinkApp extends Component {
   render() {
     return (
-      <View style={{alignItems: 'center'}}>
-        <Text>Hello {this.props.name}!</Text>
+      <View>
+        <Blink text='Blinking?' />
+        <Blink text='Am I blinking really?' />
+        <Blink text='I should be blinking' />
       </View>
     );
   }
 }
 
-export default class LotsOfGreetings extends Component {
-  render() {
-    return (
-      <View style={{alignItems: 'center', top: 50}}>
-        <Greeting name='Wes' />
-        <Greeting name='Cam' />
-        <Greeting name='Cosmo' />
-      </View>
-    );
-  }
-}
